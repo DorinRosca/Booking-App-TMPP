@@ -1,0 +1,43 @@
+﻿                                  
+<!-- ======= Header ======= -->
+<header id="header" class="d-flex align-items-center">
+     <div class="container d-flex justify-content-between align-items-center">
+
+          <div class="logo">
+               <h1><a href="@Url.Action("Index", "Home")">Rental</a></h1>
+          </div>
+
+          <nav id="navbar" class="navbar">
+               <ul>
+                    <li><a href="@Url.Action("Index", "Home")">Cars</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                         <li><a href="@Url.Action("Index", "Order")">Orders</a></li>
+                         <li><a href="@Url.Action("Logout", "User")">Logout</a></li>
+                    }
+                    else
+                    {
+                         <li><a href="@Url.Action("Login", "User")">LogIn</a></li>
+                         <li><a href="@Url.Action("SignUp", "User")">Orders</a></li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                         <li class="dropdown"><a href="#"><span>Settings</span> <i class="bi bi-chevron-down"></i></a>
+                              <ul>
+                                   <li><a href="@Url.Action("Index", "Drive")">Drives</a></li>
+                                   <li><a href="@Url.Action("Index", "Brand")">Brands</a></li>
+                                   <li><a href="@Url.Action("Index", "FuelType")">FuelTypes</a></li>
+                                   <li><a href="@Url.Action("Index", "Transmission")">Transmissions</a></li>
+                                   <li><a href="@Url.Action("Index", "Vehicle")">Vehicles</a></li>
+                                   <li><a href="@Url.Action("Index", "Status")">Statuses</a></li>
+                                   <li><a href="@Url.Action("Index", "Role")">Roles</a></li>
+                                   <li><a href="@Url.Action("Index", "User")">Users</a></li>
+                              </ul>
+                         </li>
+                    }
+               </ul>
+               <i class="bi bi-list mobile-nav-toggle"></i>
+          </nav><!-- .navbar -->
+
+     </div>
+</header><!-- End Header -->

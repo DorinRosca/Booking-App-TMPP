@@ -1,0 +1,132 @@
+﻿@using Booking.Application.Features.Car
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Microsoft.IdentityModel.Tokens
+@model CarFilterModel
+<!-- ======= Blog Section ======= -->
+<section id="blog" class="blog">
+     <div class="container" data-aos="fade-up">
+
+          <div class="row">
+
+               <div class="col-lg-8 entries">
+                    @if (Model.Cars.IsNullOrEmpty())
+                    {
+                         <section id="testimonials" class="testimonials">
+                              <div class="section-title">
+                                   <h2>There are no Cars</h2>
+                              </div>
+                         </section>
+
+                    }
+                    else
+                    {
+                         @foreach (var car in Model.Cars)
+                         {
+                              <article class="entry">
+                                   @if (car.Image != null && car.Image.Length > 0)
+                                   {
+                                        var imageBase64 = Convert.ToBase64String(car.Image);
+                                        var imageSrc = string.Format("data:image;base64,{0}", imageBase64);
+
+                                        <div class="entry-img">
+                                             <img src="@imageSrc" alt="" class="img-fluid">
+                                        </div>
+                                   }
+                                   else
+                                   {
+                                        <p>No image available</p>
+                                   }
+                                   <h2 class="entry-title">
+                                        <a href="blog-single.html">@car.Brand.BrandName @car.ModelName</a>
+                                   </h2>
+
+                                   <div class="entry-meta">
+                                        <ul>
+                                             <li ><i class="bi bi-car-front"></i> <a >Vehicle - @car.Vehicle.VehicleName</a></li>
+                                             <li ><i class="bi bi-person"></i> <a>Seat number - @car.Vehicle.SeatNumber</a></li>
+                                             <li ><i class="bi bi-ev-station"></i> <a> FuelType - @car.FuelType.FuelTypeName</a></li>
+                                             <li><i class="bi bi-calendar"></i> <a>Year - @car.Year</a></li>
+                                             <li ><i class="bi bi-r-circle"></i> <a>Transmission - @car.Transmission.TransmissionName</a></li>
+                                             <li ><i class="bi bi-router-fill"></i> <a>Drive - @car.Drive.DriveName</a></li>
+
+                                        </ul>
+                                   </div>
+                                   <div class="entry-content">
+                                        <p>
+                                             <li class="d-flex align-items-center"><i class="bi bi-currency-dollar"></i> <a>@car.PricePerDay /day</a></li>
+                                        </p>
+                                        @if (User.Identity.IsAuthenticated)
+                                        {
+                                             <form method="get" action="@Url.Action("Create", "Order")">
+                                              <input type="hidden" name="carId" value="@car.CarId"/>
+                                              <button type="submit" class="read-more">
+                                                   <a>Rent</a>
+                                              </button>
+                                         </form>
+                                        }
+                                        else
+                                        {
+                                             <form method="get" action="@Url.Action("Login", "User")">
+                                                  <button type="submit" class="read-more">
+                                                       <a href="">Rent</a>
+                                                  </button>
+                                             </form>
+                                        }
+                                   </div>
+
+                              </article>
+                              <!-- End blog entry -->
+
+                         }
+                    }
+
+
+               </div><!-- End blog entries list -->
+
+               <div class="col-lg-4">
+
+                    <div class="sidebar">
+                         <form method="get" action="@Url.Action("Index", "Car")">
+
+                              <h3 class="sidebar-title">Search</h3>
+                              <div class="sidebar-item search-form">
+                                   <input type="text" id="SearchCarName" name="SearchCarName">
+                                   <button type="submit"><i class="bi bi-search"></i></button>
+                              </div><!-- End sidebar search formn-->
+
+                              <h3 class="sidebar-title">Categories</h3>
+                              <div class="sidebar-item categories">
+                                   <ul>
+                                        @foreach (var brand in Model.Brands)
+                                        {
+                                             <li>
+                                                  <input class="form-check-input" type="checkbox" id="checkbox-brand-@brand.BrandId" name="SelectedBrandId" value="@brand.BrandId" @(Model.SelectedBrandId != null && Model.SelectedBrandId.Contains(brand.BrandId) ? "checked" : "")>
+                                                  <label class="form-check-label" for="checkbox-brand-@brand.BrandId">
+                                                       @brand.BrandName</label>
+                                             </li>
+                                        }
+                                   </ul>
+                              </div><!-- End sidebar categories-->
+                              <h3 class="sidebar-title">Categories</h3>
+                              <div class="sidebar-item categories">
+                                   <ul>
+                                        @foreach (var vehicle in Model.Vehicles)
+                                        {
+                                             <li>
+                                                  <input class="form-check-input" type="checkbox" id="checkbox-vehicle-@vehicle.VehicleId" name="SelectedVehicleId" value="@vehicle.VehicleId" @(Model.SelectedVehicleId != null && Model.SelectedVehicleId.Contains(vehicle.VehicleId) ? "checked" : "")>
+                                                  <label class="form-check-label" for="checkbox-vehicle-@vehicle.VehicleId">
+                                                       @vehicle.VehicleName
+                                                  </label>
+                                             </li>
+                                        }
+                                   </ul>
+                              </div><!-- End sidebar categories-->
+                         </form>
+                    </div><!-- End sidebar -->
+
+               </div><!-- End blog sidebar -->
+
+          </div>
+
+     </div>
+</section><!-- End Blog Section -->
