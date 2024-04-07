@@ -7,8 +7,9 @@
      using Microsoft.AspNetCore.Mvc;
 using System.Data;
      using Microsoft.AspNetCore.Authorization;
+using Booking.Application.Features.Car.Strategy;
 
-     namespace Booking.Web.UI.Car
+namespace Booking.Web.UI.Car
      {
          public class CarController : Controller
          {
@@ -22,6 +23,7 @@ using System.Data;
              {
                   var query = new GetCarsQuery(model);
                   var cars = await _mediator.Send(query);
+                  CarSearchStrategy.SetStrategy(cars).SearchCars(cars);
                   return View(cars);
              }
 

@@ -14,6 +14,7 @@ namespace Booking.Application.Features.Car
           public IEnumerable<VehicleModel>? Vehicles { get; set; }
           public IEnumerable<BrandModel>? Brands { get; set; }
 
+          public bool GetCheapest { get; set; } = true;
           public CarFilterModel()
           {
                SelectedBrandId = new List<byte?>();

@@ -11,7 +11,7 @@ namespace Booking.Application
                     o.RegisterServicesFromAssemblies(AppDomain.CurrentDomain.GetAssemblies());
                });
                services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
+          
           }
      }
 }
