@@ -38,7 +38,8 @@ namespace Booking.Web.UI.Drive
           [ValidateAntiForgeryToken]
           public async Task<ActionResult> Create(DriveModel driveModel)
           {
-               var addDriveCommand = new AddDriveCommand(driveModel);
+               var data = driveModel.DeepCopy();
+               var addDriveCommand = new AddDriveCommand(data);
                var insertedResult = await _mediator.Send(addDriveCommand);
                return View(insertedResult);
           }
@@ -76,7 +77,8 @@ namespace Booking.Web.UI.Drive
           [ValidateAntiForgeryToken]
           public async Task<IActionResult> Update(DriveModel updatedDriveModel)
           {
-               var updateDriveCommand = new UpdateDriveCommand(updatedDriveModel);
+               var newData = updatedDriveModel.DeepCopy();
+               var updateDriveCommand = new UpdateDriveCommand(newData);
                var updateResult = await _mediator.Send(updateDriveCommand);
 
                var data = new Tuple<UpdateDriveResponse, DriveModel?>(updateResult, updatedDriveModel);

@@ -38,7 +38,8 @@ namespace Booking.Web.UI.FuelType
           [ValidateAntiForgeryToken]
           public async Task<ActionResult> Create(FuelTypeModel fuelTypeModel)
           {
-               var addFuelTypeCommand = new AddFuelTypeCommand(fuelTypeModel);
+               var data = fuelTypeModel.DeepCopy();
+               var addFuelTypeCommand = new AddFuelTypeCommand(data);
                var insertedResult = await _mediator.Send(addFuelTypeCommand);
                return View(insertedResult);
           }
@@ -77,7 +78,8 @@ namespace Booking.Web.UI.FuelType
           [ValidateAntiForgeryToken]
           public async Task<IActionResult> Update(FuelTypeModel updatedFuelTypeModel)
           {
-               var updateFuelTypeCommand = new UpdateFuelTypeCommand(updatedFuelTypeModel);
+               var newData = updatedFuelTypeModel.DeepCopy();
+               var updateFuelTypeCommand = new UpdateFuelTypeCommand(newData);
                var updateResult = await _mediator.Send(updateFuelTypeCommand);
 
                var data = new Tuple<UpdateFuelTypeResponse, FuelTypeModel?>(updateResult, updatedFuelTypeModel);

@@ -25,8 +25,8 @@ namespace Booking.Application.Features.Brand.Queries
                }
 
                var brand = await _getById.GetByIdAsync(request.Id);
-
-               return brand != null ? _mapper.Map<BrandModel>(brand) : null;
+               var newbrand = new BrandFactory().Create();
+               return brand != null ? _mapper.Map(brand, newbrand) : null;
           }
      }
 }

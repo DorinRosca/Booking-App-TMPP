@@ -37,7 +37,8 @@ namespace Booking.Web.UI.Brand
           [ValidateAntiForgeryToken]
           public async Task<ActionResult> Create(BrandModel brandModel)
           {
-               var addBrandCommand = new AddBrandCommand(brandModel);
+               var brandData = brandModel.DeepCopy();
+               var addBrandCommand = new AddBrandCommand(brandData);
                var insertedResult = await _mediator.Send(addBrandCommand);
                return View(insertedResult);
           }
@@ -76,7 +77,8 @@ namespace Booking.Web.UI.Brand
           [ValidateAntiForgeryToken]
           public async Task<IActionResult> Update(BrandModel updatedBrandModel)
           {
-               var updateBrandCommand = new UpdateBrandCommand(updatedBrandModel);
+               var newData = updatedBrandModel.DeepCopy(); 
+               var updateBrandCommand = new UpdateBrandCommand(newData);
                var updateResult = await _mediator.Send(updateBrandCommand);
 
                var data = new Tuple<UpdateBrandResponse, BrandModel?>(updateResult, updatedBrandModel);

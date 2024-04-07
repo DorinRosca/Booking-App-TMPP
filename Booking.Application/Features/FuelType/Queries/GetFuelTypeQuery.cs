@@ -25,8 +25,8 @@ namespace Booking.Application.Features.FuelType.Queries
                }
 
                var fuelType = await _getById.GetByIdAsync(request.Id);
-
-               return fuelType is not null ? _mapper.Map<FuelTypeModel>(fuelType) : null;
+               var newFuelType = new FuelTypeFactory().Create();
+               return fuelType is not null ? _mapper.Map(fuelType, newFuelType) : null;
           }
      }
 }

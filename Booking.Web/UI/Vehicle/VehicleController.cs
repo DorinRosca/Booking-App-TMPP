@@ -39,7 +39,8 @@ namespace Booking.Web.UI.Vehicle
           [ValidateAntiForgeryToken]
           public async Task<ActionResult> Create(VehicleModel vehicleModel)
           {
-               var addVehicleCommand = new AddVehicleCommand(vehicleModel);
+               var data = vehicleModel.DeepCopy();
+               var addVehicleCommand = new AddVehicleCommand(data);
                var insertedResult = await _mediator.Send(addVehicleCommand);
                return View(insertedResult);
           }
@@ -76,7 +77,8 @@ namespace Booking.Web.UI.Vehicle
           [ValidateAntiForgeryToken]
           public async Task<IActionResult> Update(VehicleModel updatedVehicleModel)
           {
-               var updateVehicleCommand = new UpdateVehicleCommand(updatedVehicleModel);
+               var newData = updatedVehicleModel.DeepCopy();
+               var updateVehicleCommand = new UpdateVehicleCommand(newData);
                var updateResult = await _mediator.Send(updateVehicleCommand);
 
                var data = new Tuple<UpdateVehicleResponse, VehicleModel?>(updateResult, updatedVehicleModel);

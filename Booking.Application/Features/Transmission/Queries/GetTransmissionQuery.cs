@@ -23,8 +23,8 @@ namespace Booking.Application.Features.Transmission.Queries
         {
             if (request.Id == 0) { return null; }
             var transmission = await _getById.GetByIdAsync(request.Id);
-
-            return transmission is not null ? _mapper.Map<TransmissionModel>(transmission) : null;
+            var newTransmission = new TransmissionFactory().Create();
+            return transmission is not null ? _mapper.Map(transmission, newTransmission) : null;
         }
     }
 }

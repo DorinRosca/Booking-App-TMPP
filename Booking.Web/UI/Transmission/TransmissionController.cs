@@ -38,7 +38,8 @@ namespace Booking.Web.UI.Transmission
           [ValidateAntiForgeryToken]
           public async Task<ActionResult> Create(TransmissionModel transmissionModel)
           {
-               var addTransmissionCommand = new AddTransmissionCommand(transmissionModel);
+               var data = transmissionModel.DeepCopy();
+               var addTransmissionCommand = new AddTransmissionCommand(data);
                var insertedResult = await _mediator.Send(addTransmissionCommand);
                return View(insertedResult);
           }
@@ -77,6 +78,7 @@ namespace Booking.Web.UI.Transmission
           [ValidateAntiForgeryToken]
           public async Task<IActionResult> Update(TransmissionModel updatedTransmissionModel)
           {
+               var newData = updatedTransmissionModel.DeepCopy();
                var updateTransmissionCommand = new UpdateTransmissionCommand(updatedTransmissionModel);
                var updateResult = await _mediator.Send(updateTransmissionCommand);
 

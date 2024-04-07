@@ -25,8 +25,8 @@ namespace Booking.Application.Features.Drive.Queries
                }
 
                var drive = await _getById.GetByIdAsync(request.Id);
-
-               return drive != null ? _mapper.Map<DriveModel>(drive) : null;
+               var newDrive = new DriveFactory().Create();
+               return drive != null ? _mapper.Map(drive, newDrive) : null;
           }
      }
 }

@@ -23,8 +23,8 @@ namespace Booking.Application.Features.Vehicle.Queries
         {
             if (request.Id == 0) { return null; }
             var vehicle = await _getById.GetByIdAsync(request.Id);
-
-            return vehicle is not null ? _mapper.Map<VehicleModel>(vehicle) : null;
+            var newVehicle = new VehicleFactory().Create();
+            return vehicle is not null ? _mapper.Map(vehicle, newVehicle) : null;
         }
     }
 }
