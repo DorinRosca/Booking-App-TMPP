@@ -1,6 +1,6 @@
 ﻿using Booking.Application.Responses;
 
-namespace Booking.Application.Features.User.Commands.Login
+namespace Booking.Application.Features.User
 {
     public class LoginResponse : BaseResponse
     {

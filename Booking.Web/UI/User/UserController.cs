@@ -1,6 +1,5 @@
 ﻿using Booking.Application.Features.User;
 using Booking.Application.Features.User.Commands.DeleteRole;
-using Booking.Application.Features.User.Commands.Login;
 using Booking.Application.Features.User.Commands.Logout;
 using Booking.Application.Features.User.Commands.Register;
 using Booking.Application.Features.User.Commands.SetRole;
@@ -15,10 +14,12 @@ namespace Booking.Web.UI.User
      public class UserController : Controller
      {
           private readonly IMediator _mediator;
+          private readonly ILoginProxy _loginProxy;
 
-          public UserController(IMediator mediator)
+          public UserController(IMediator mediator, ILoginProxy loginProxy)
           {
                _mediator = mediator;
+               _loginProxy = loginProxy;
           }
 
           public IActionResult SignUp()
@@ -51,15 +52,23 @@ namespace Booking.Web.UI.User
           [ValidateAntiForgeryToken]
           public async Task<IActionResult> Login(LoginModel loginModel)
           {
-               var loginCommand = new LoginCommand(loginModel);
-               var loginResponse = await _mediator.Send(loginCommand);
+               var loginResponse = new LoginResponse();
 
-               if (loginResponse.LoginIsSuccessful)
+               // Use the proxy to perform login
+               var result = await _loginProxy.LoginAsync(loginModel.Email, loginModel.Password, loginModel.RememberMe);
+
+               if (result.Succeeded)
                {
+                    // Login successful, redirect to home page
                     return RedirectToAction("Index", "Home");
                }
-
-               return View(loginResponse);
+               else
+               {
+                    // Login failed, return view with appropriate message
+                    loginResponse.Success = false;
+                    loginResponse.BaseMessage = "Wrong username or password";
+                    return View(loginResponse);
+               }
           }
 
           public async Task<IActionResult> Logout()
