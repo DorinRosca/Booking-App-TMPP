@@ -1,4 +1,5 @@
 ﻿using Booking.Application.Features.Brand;
+using Booking.Application.Features.Car.Decorator;
 using Booking.Application.Features.Drive;
 using Booking.Application.Features.FuelType;
 using Booking.Application.Features.Order;
@@ -8,7 +9,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Booking.Application.Features.Car
 {
-    public class CarModel
+    public class CarModel : ICar
     {
          public int? CarId { get; set; }
 
@@ -31,6 +32,16 @@ namespace Booking.Application.Features.Car
          public VehicleModel? Vehicle { get; set; }
           public ICollection<OrderModel>? Order { get; set; }
          public IFormFile? ImageFile { get; set; }
+
+          public virtual string GetDescription()
+          {
+               return $"Car ID: {CarId}, Model: {ModelName}";
+          }
+
+          public virtual decimal? GetDailyPrice()
+          {
+               return PricePerDay;
+          }
 
      }
 }
