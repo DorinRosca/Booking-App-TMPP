@@ -3,7 +3,8 @@ using Booking.Application.Contracts.Database.Car;
 using Booking.Application.Contracts.Database.Order;
 using Booking.Application.Contracts.Database.Status;
 using Booking.Application.Contracts.Database.User;
-using Booking.Application.Features.User;
+using Booking.Application.Features.User.Facade;
+using Booking.Application.Features.User.Proxy;
 using Booking.Database.Car;
 using Booking.Database.Common;
 using Booking.Database.Order;
@@ -15,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Booking.Database
 {
-     public static class DataBaseServiceRegistration
+    public static class DataBaseServiceRegistration
      {
           public static IServiceCollection AddDatabaseServices(this IServiceCollection services, ConfigurationManager config)
           {
@@ -50,6 +51,7 @@ namespace Booking.Database
                services.AddScoped(typeof(ILoginProxy), typeof(LoginProxy));
                //Status
                services.AddScoped(typeof(IGetStatusIdByName), typeof(GetStatusIdByName));
+               services.AddScoped(typeof(IAuthenticationFacade), typeof(AuthenticationFacade));
 
                return services;
           }

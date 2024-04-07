@@ -3,23 +3,25 @@ using Booking.Application.Features.User.Commands.DeleteRole;
 using Booking.Application.Features.User.Commands.Logout;
 using Booking.Application.Features.User.Commands.Register;
 using Booking.Application.Features.User.Commands.SetRole;
+using Booking.Application.Features.User.Facade;
 using Booking.Application.Features.User.Queries;
 using MediatR;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
 namespace Booking.Web.UI.User
 {
-     public class UserController : Controller
+    public class UserController : Controller
      {
           private readonly IMediator _mediator;
-          private readonly ILoginProxy _loginProxy;
+          private readonly IAuthenticationFacade _authenticationFacade;
 
-          public UserController(IMediator mediator, ILoginProxy loginProxy)
+          public UserController(IMediator mediator, IAuthenticationFacade authenticationFacade)
           {
                _mediator = mediator;
-               _loginProxy = loginProxy;
+               _authenticationFacade= authenticationFacade;
           }
 
           public IActionResult SignUp()
@@ -32,7 +34,7 @@ namespace Booking.Web.UI.User
           public async Task<IActionResult> SignUp(RegisterModel registrationModel)
           {
                var registerCommand = new RegisterCommand(registrationModel);
-               var registrationResponse = await _mediator.Send(registerCommand);
+               var registrationResponse = await _authenticationFacade.Register(registrationModel);
 
                if (registrationResponse.LoginIsSuccessful)
                {
@@ -52,30 +54,22 @@ namespace Booking.Web.UI.User
           [ValidateAntiForgeryToken]
           public async Task<IActionResult> Login(LoginModel loginModel)
           {
-               var loginResponse = new LoginResponse();
 
-               // Use the proxy to perform login
-               var result = await _loginProxy.LoginAsync(loginModel.Email, loginModel.Password, loginModel.RememberMe);
+               var result = await _authenticationFacade.Login(loginModel);
 
-               if (result.Succeeded)
+               if (result.Success)
                {
-                    // Login successful, redirect to home page
                     return RedirectToAction("Index", "Home");
                }
                else
                {
-                    // Login failed, return view with appropriate message
-                    loginResponse.Success = false;
-                    loginResponse.BaseMessage = "Wrong username or password";
-                    return View(loginResponse);
+                    return View(result);
                }
           }
 
           public async Task<IActionResult> Logout()
           {
-               var logoutCommand = new LogoutCommand();
-               var logoutResponse = await _mediator.Send(logoutCommand);
-
+               var logoutResponse = await _authenticationFacade.Logout();
                if (logoutResponse.LogoutIsSuccessful)
                {
                     return RedirectToAction("Login", "User");
