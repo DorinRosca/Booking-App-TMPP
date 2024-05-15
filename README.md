@@ -23,7 +23,7 @@ Used Design Patterns Are:
     <td>Creational</td>
     <td>Builder</td>
     <td>Create step by step Order of Booking an Car</td>
-    <td>Booking.Application.Features.Order.Builder.OrderBuilder.cs</td>  
+    <td>Booking.Application.Features.Order.Builder.OrderBuilder.cs usage:AddOrderCommandHandler.cs</td>  
   </tr>
   <tr>
     <td>Creational</td>
@@ -34,14 +34,14 @@ Used Design Patterns Are:
   <tr>
     <td>Creational</td>
     <td>Factory</td>
-    <td>Used to create car settings when returning from DB</td>
+    <td>Used to create different car settings sunder same interface when returning from DB</td>
     <td>Booking.Application.Features.Common ICarSettingFactory.cs ICarSettings.cs</td>
   </tr>
   <tr>
     <td>Structural</td>
     <td>Proxy</td>
-    <td>Used to call authentication logic inside other class for security</td>
-    <td>Booking.Application.Features.User.Proxy ILoginProxy.cs LoginProxy.cs</td>
+    <td>Used to call  authentication logic inside other class for security</td>
+    <td>Booking.Database.User.LoginProxy.cs/Login.cs </td>
   </tr>
   <tr>
     <td>Structural</td>
@@ -59,7 +59,7 @@ Used Design Patterns Are:
     <td>Behavioral</td>
     <td>Command</td>
     <td>Used to store requests for data when calling DB</td>
-    <td>Booking.Application.Features</td>
+    <td>Booking.Application.Features.Car.CommandS.Add.AddCarCoomad or any file with command name</td>
   </tr>
   <tr>
     <td>Behavioral</td>
@@ -71,7 +71,7 @@ Used Design Patterns Are:
     <td>Behavioral</td>
     <td>Mediator</td>
     <td>Used to be able to send data between application and Web layer. Also it is used to avoid using repository so every command/query is independent</td>
-    <td>Booking.Application.Features + Any Controller</td>
+    <td>Booking.Booking.Infrastructure.IMediator/Mediator + Any Controller</td>
   </tr>
 </table>
 	
