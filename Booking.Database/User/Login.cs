@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Booking.Database.User
 {
-     internal class Login :ILogin
+     public class Login :ILogin
      {
           private readonly SignInManager<ApplicationUser> _manager;
           

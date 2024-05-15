@@ -4,7 +4,7 @@ using Booking.Application.Contracts.Database.Order;
 using Booking.Application.Contracts.Database.Status;
 using Booking.Application.Contracts.Database.User;
 using Booking.Application.Features.User.Facade;
-using Booking.Application.Features.User.Proxy;
+//using Booking.Application.Features.User.Proxy;
 using Booking.Database.Car;
 using Booking.Database.Common;
 using Booking.Database.Order;
@@ -16,7 +16,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Booking.Database
 {
-    public static class DataBaseServiceRegistration
+     public static class DataBaseServiceRegistration
      {
           public static IServiceCollection AddDatabaseServices(this IServiceCollection services, ConfigurationManager config)
           {
@@ -43,12 +43,13 @@ namespace Booking.Database
                services.AddScoped(typeof(IGetUserByName), typeof(GetUserByName));
                services.AddScoped(typeof(IGetUserRoles), typeof(GetUserRoles));
                services.AddScoped(typeof(IGetUsers), typeof(GetUsers));
-               services.AddScoped(typeof(ILogin), typeof(Login));
+               services.AddScoped(typeof(Login));
+               services.AddScoped(typeof(Application.Contracts.Database.User.ILogin), typeof(LoginProxy));
                services.AddScoped(typeof(ILogout), typeof(Logout));
                services.AddScoped(typeof(IRegister), typeof(Register));
                services.AddScoped(typeof(IRemoveUserRole), typeof(RemoveUserRole));
                services.AddScoped(typeof(ISetRole), typeof(SetRole));
-               services.AddScoped(typeof(ILoginProxy), typeof(LoginProxy));
+              // services.AddScoped(typeof(Application.Features.User.Proxy.ILogin), typeof(LoginProxy));
                //Status
                services.AddScoped(typeof(IGetStatusIdByName), typeof(GetStatusIdByName));
                services.AddScoped(typeof(IAuthenticationFacade), typeof(AuthenticationFacade));

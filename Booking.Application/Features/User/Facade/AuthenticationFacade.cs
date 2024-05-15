@@ -1,6 +1,7 @@
 ﻿using Booking.Application.Contracts.Database.User;
 using Booking.Application.Features.User.Commands.Logout;
 using Booking.Application.Features.User.Commands.Register;
+using Booking.Application.Features.User.Proxy;
 using MediatR;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace Booking.Application.Features.User.Facade
 {
     public class AuthenticationFacade : IAuthenticationFacade
     {
-        private readonly ILogin _login;
+        private readonly Contracts.Database.User.ILogin _login;
         private readonly IMediator _mediator;
-        public AuthenticationFacade(ILogin login, IMediator mediator)
+        public AuthenticationFacade(Application.Contracts.Database.User.ILogin login, IMediator mediator)
         {
             _login = login;
             _mediator = mediator;

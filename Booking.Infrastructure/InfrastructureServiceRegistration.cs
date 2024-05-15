@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Booking.Application;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Booking.Infrastructure
 {
@@ -6,7 +7,6 @@ namespace Booking.Infrastructure
      {
           public static void AddInfrastructureServices(this IServiceCollection services)
           {
-
           }
      }
 }

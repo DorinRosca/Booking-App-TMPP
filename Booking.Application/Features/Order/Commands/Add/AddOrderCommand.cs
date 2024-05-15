@@ -59,10 +59,15 @@ public class AddOrderCommandHandler : IRequestHandler<AddOrderCommand, AddOrderR
           try
           {
                builder.WithUserId();
+
                builder.WithCarId(request.CarId);
+
                await builder.WithRentalDates(request.RentalStartDate, request.RentalEndDate);
+
                await builder.WithTotalAmount();
+
                builder.WithStatusId(await _getStatus.GetAsync("Processing"));
+
                var order = builder.Build();
 
                var validationResult = await validator.ValidateAsync(order, cancellationToken);

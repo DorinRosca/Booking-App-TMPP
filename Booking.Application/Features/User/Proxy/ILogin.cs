@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Booking.Application.Features.User.Proxy
 {
-    public interface ILoginProxy
-    {
-        Task<SignInResult> LoginAsync(string email, string password, bool rememberMe);
-    }
+//    public interface ILogin
+  //  {
+    //    Task<SignInResult> LoginAsync(string email, string password, bool rememberMe);
+    //}
 }
